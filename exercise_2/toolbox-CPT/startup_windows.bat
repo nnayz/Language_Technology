@@ -1,0 +1,1 @@
+java -Xmx500M -classpath .;ASVToolbox.jar -Djava.ext.dirs=.;.\lib de.uni_leipzig.asv.toolbox.toolboxGui.Toolbox

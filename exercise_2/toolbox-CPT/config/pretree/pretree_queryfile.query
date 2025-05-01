@@ -1,0 +1,15 @@
+#Sat Apr 07 19:51:41 CEST 2007
+pretree.dbURL=localhost
+pretree.protokol=mysql
+pretree.idcolumn=wid
+pretree.dbPort=3306
+pretree.wordcolumn=word
+pretree.tableName_getTable=words
+pretree.dbDatabase=pretree
+pretree.classcolumn=class
+pretree.driverClass=com.mysql.jdbc.Driver
+pretree.userID=root
+pretree.query_getTable=SELECT word,class FROM words WHERE wid>\=0 LIMIT 2000;
+pretree.startatid=0
+pretree.passwd=root
+pretree.numberofwords=2000
