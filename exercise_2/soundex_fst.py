@@ -8,91 +8,99 @@ The goal is for homophones to be encoded to the same representation so that they
 
 """
 
-def keep_first_and_drop_vowels(name: str) -> str:
-    """
-    Keep the first letter and drop all occurrences of 
-    non-initial a, e, h, i, o, u, w, y.
-    """
-    if not name:
-        return ""
-    first_letter = name[0]
-    rest = name[1:]
-    to_drop = set("aehiouwyAEHIOUWY")
-    rest_filtered = "".join([c for c in rest if c not in to_drop])
-    return first_letter + rest_filtered
+class Soundex:
+    def __init__(self):
+        self.name = ""
 
-def take_consonants_and_give_numbers(consonant: str) -> str:
-    """
-    Take consonants and give numbers according to Soundex rules.
-    """
-    if not consonant:
-        return ""
-    if consonant in set("bfpvBFPV"):
-        return "1"
-    elif consonant in set("cgjkqsxzCGJKQSXZ"):
-        return "2"
-    elif consonant in set("dtDT"):
-        return "3"
-    elif consonant in set("lL"):
-        return "4"
-    elif consonant in set("mnMN"):
-        return "5"
-    elif consonant in set("rR"):
-        return "6"
-    else:
-        return consonant
+    def __init__(self, name: str):
+        self.name = name
 
-def replace_letters_with_numbers(name: str) -> str:
-    """
-    Replace letters with numbers according to Soundex rules.
-    """
-    if not name:
-        return ""
+    def keep_first_and_drop_vowels(self) -> str:
+        """
+        Keep the first letter and drop all occurrences of 
+        non-initial a, e, h, i, o, u, w, y.
+        """
+        if not self.name:
+            return ""
+        first_letter = self.name[0]
+        rest = self.name[1:]
+        to_drop = set("aehiouwyAEHIOUWY")
+        rest_filtered = "".join([c for c in rest if c not in to_drop])
+        return first_letter + rest_filtered
 
-    first_letter = name[0]
-    rest = name[1:]
-    rest_filtered = "".join([take_consonants_and_give_numbers(c) for c in rest])
-    return first_letter + rest_filtered
-    
-def collapse_consecutive_digits(name: str) -> str:
-    """
-    Collapse consecutive digits.
-    """
-    if not name:
-        return ""
-    first_letter = name[0]
-    rest = name[1:]
-    rest_filtered = ""
-    for i in range(len(rest)):
-        if rest[i].isdigit() and rest[i] == rest[i-1]:
-            continue
+    def take_consonants_and_give_numbers(self, consonant: str) -> str:
+        """
+        Take consonants and give numbers according to Soundex rules.
+        """
+        if not consonant:
+            return ""
+        if consonant in set("bfpvBFPV"):
+            return "1"
+        elif consonant in set("cgjkqsxzCGJKQSXZ"):
+            return "2"
+        elif consonant in set("dtDT"):
+            return "3"
+        elif consonant in set("lL"):
+            return "4"
+        elif consonant in set("mnMN"):
+            return "5"
+        elif consonant in set("rR"):
+            return "6"
         else:
-            rest_filtered += rest[i]
-    return first_letter + rest_filtered
+            return consonant
 
-def pad_with_zeros(name: str) -> str:
-    """
-    Pad with zeros to make the length 4.
-    """
-    if not name:
-        return ""
-    if len(name) > 4:
-        return name[:4]
-    else:
-        return name + "0" * (4 - len(name))
+    def replace_letters_with_numbers(self) -> str:
+        """
+        Replace letters with numbers according to Soundex rules.
+        """
+        if not self.name:
+            return ""
 
-def soundex_fst(name: str) -> str:
-    """
-    Soundex FST.
-    """
-    if not name:
-        return ""
-    name = name.upper()
-    name = keep_first_and_drop_vowels(name)
-    name = replace_letters_with_numbers(name)
-    name = collapse_consecutive_digits(name)
-    name = pad_with_zeros(name)
-    return name
+        first_letter = self.name[0]
+        rest = self.name[1:]
+        rest_filtered = "".join([self.take_consonants_and_give_numbers(c) for c in rest])
+        return first_letter + rest_filtered
+    
+    def collapse_consecutive_digits(self) -> str:
+        """
+        Collapse consecutive digits.
+        """
+        if not self.name:
+            return ""
+        first_letter = self.name[0]
+        rest = self.name[1:]
+        rest_filtered = ""
+        for i in range(len(rest)):
+            if rest[i].isdigit() and rest[i] == rest[i-1]:
+                continue
+            else:
+                rest_filtered += rest[i]
+        return first_letter + rest_filtered
+
+    def pad_with_zeros(self,name: str) -> str:
+        """
+        Pad with zeros to make the length 4.
+        """
+        if not name:
+            return ""
+        if len(name) > 4:
+            return name[:4]
+        else:
+            return name + "0" * (4 - len(name))
+        
+    def soundex_fst(self) -> str:
+        """
+        Soundex FST.
+        """
+        if not self.name:
+            return ""
+        self.name = self.name.upper()
+        self.name = self.keep_first_and_drop_vowels()
+        self.name = self.replace_letters_with_numbers()
+        self.name = self.collapse_consecutive_digits()
+        self.name = self.pad_with_zeros(self.name)
+        return self.name
+
 
 if __name__ == "__main__":
     print("\033[95m" + "="*40 + "\033[0m")
@@ -105,5 +113,6 @@ if __name__ == "__main__":
             print("\033[95m" + "="*40 + "\033[0m")
             break
         else:
-            print(f"\033[93mSoundex code of the name: \033[1m{soundex_fst(name)}\033[0m")
+            soundex = Soundex(name)
+            print(f"\033[93mSoundex code of the name: \033[1m{soundex.soundex_fst()}\033[0m")
             print("\033[95m" + "-"*40 + "\033[0m")
