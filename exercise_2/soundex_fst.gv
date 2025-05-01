@@ -1,0 +1,16 @@
+// Soundex FST
+digraph {
+	S [label=Start]
+	K [label="Keep First Letter"]
+	D [label="Drop Vowels"]
+	M [label="Map to Numbers"]
+	C [label="Collapse Digits"]
+	P [label="Pad/Trim"]
+	E [label=End]
+	S -> K [label="input name"]
+	K -> D [label="keep first, rest"]
+	D -> M [label="drop vowels"]
+	M -> C [label="map to numbers"]
+	C -> P [label="collapse digits"]
+	P -> E [label="pad/trim to 4"]
+}
